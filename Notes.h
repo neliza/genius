@@ -1,7 +1,4 @@
-/*************************************************
- * Public Constants
- *************************************************/
-
+#define NOTE_H   0
 #define NOTE_B0  31
 #define NOTE_C1  33
 #define NOTE_CS1 35
