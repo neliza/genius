@@ -232,6 +232,8 @@ int posSeq = 0;
 int posType = 0;
 int state = waitingStart; 
 int key = 0; 
+int running = 0;
+int startValue = 0;
 
 void setup() 
 {                
@@ -254,75 +256,93 @@ void setup()
 }
 
 void loop() {
-  switch(state)
-  {
-    case waitingStart:   
-      interval = 500;
-      if (debugging)
-        Serial.println("waitingStart");  
-      key = readKey(false);
-      state = playingSeq;
-      return;  
-    case playingSeq:
-      if (debugging)
-        Serial.println("playingSeq");  
-      playSeq();
-      posType = 0;
-      state = userTyping;
-      return;
-    case userTyping:
-      if (debugging)
-        Serial.println("userTyping");  
-      key = 1;
-      int ok = true;
-      while(ok)
-      {
-          key = readKey(true);
-          if (key == 0)
-            break;
-          play(key-4);
-          ok = validateSeq(key);
-          if (debugging)
-          {
-            Serial.print("ok=");
-            Serial.println(ok);
-          }
-          if (ok)
-          {
-            if (posType == posSeq)
+  
+    running = 1;
+    switch(state)
+    {
+      case waitingStart:   
+        interval = 500;
+        if (debugging){
+          Serial.print("waitingStart");  
+          Serial.println(waitingStart);
+        }
+        key = pushStart();
+        if(key == 1)
+          state = playingSeq;
+        return;  
+      case playingSeq:
+        if (debugging)
+          Serial.println("playingSeq");  
+        playSeq();
+        posType = 0;
+        state = userTyping;
+        return;
+      case userTyping:
+        if (debugging)
+          Serial.println("userTyping");  
+        key = 1;
+        int ok = true;
+        while(ok)
+        {
+            key = readKey(true);
+            if (key == 0)
+              break;
+            play(key-4);
+            ok = validateSeq(key);
+            if (debugging)
             {
-              delay(1000);
-              posSeq++;
-              state = playingSeq;
-              interval = interval * 0.95;
-              return;
-            }  
-            else
+              Serial.print("ok=");
+              Serial.println(ok);
+            }
+            if (ok)
             {
-              posType++;
-            }            
-          }
-      } 
-      playWrong();
-      Serial.print("Voce fez ");
-      Serial.println(posSeq);
-      if (posSeq == 0)
-        Serial.println("Putz, como vc e burro!");
-      else
-         if (posSeq <= 5)
-            Serial.println("Alzheimer");
-         else
-            if (posSeq < 10)
-               Serial.println("Uai... ate que nao tao pessimo");
-            else
-               if (posSeq < 15)
-                 Serial.println("Uia!");
-               else
-                 Serial.println("Cool!");
-      generateSeq();
-      state = waitingStart;
-      return;      
+              if (posType == posSeq)
+              {
+                delay(1000);
+                posSeq++;
+                state = playingSeq;
+                interval = interval * 0.95;
+                return;
+              }  
+              else
+              {
+                posType++;
+              }            
+            }
+        } 
+        playWrong();
+        Serial.print("Voce fez ");
+        Serial.println(posSeq);
+        if (posSeq == 0)
+          Serial.println("Putz, como vc e burro!");
+        else
+           if (posSeq <= 5)
+              Serial.println("Alzheimer");
+           else
+              if (posSeq < 10)
+                 Serial.println("Uai... ate que nao tao pessimo");
+              else
+                 if (posSeq < 15)
+                   Serial.println("Uia!");
+                 else
+                   Serial.println("Cool!");
+        generateSeq();
+        state = waitingStart;
+        return;
+          
   }
+}
+
+int pushStart(){
+  startValue = digitalRead(start);
+
+  if (startValue == 1){
+    Serial.print("StartValue=");
+    Serial.println(startValue);
+    return 1;
+  }
+  
+  return 0;
 }
 
 int validateSeq(int key)
@@ -384,6 +404,7 @@ void playStart()
 void playWrong()
 {
     Serial.println("playWrong");
+    running = 0;
     int light = lwhite;
     for (int thisNote = 1; thisNote < (death[0] * 2 + 1); thisNote = thisNote + 2) { // Run through the notes one at a time
       if (death[thisNote] != NOTE_H) {
@@ -466,6 +487,3 @@ void playSeq()
     play(seq[i]);
   }
 }
-
-
-
