@@ -255,6 +255,23 @@ void setup()
   generateSeq();
 }
 
+void startingDelay(){
+    Serial.print("startingDelay");  
+
+    delay(500);
+    
+    //Acende todas as luzes
+    for (int thisLight = lwhite; thisLight <= lred; thisLight++) {
+      digitalWrite(thisLight, HIGH);  
+    }
+    delay(500);
+    //Apaga todas as luzes
+    for (int thisLight = lwhite; thisLight <= lred; thisLight++) {
+      digitalWrite(thisLight, LOW);  
+    }
+    delay(1000);
+}
+
 void loop() {
   
     running = 1;
@@ -267,8 +284,10 @@ void loop() {
           Serial.println(waitingStart);
         }
         key = pushStart();
-        if(key == 1)
+        if(key == 1){
           state = playingSeq;
+          startingDelay();
+        }
         return;  
       case playingSeq:
         if (debugging)
@@ -487,3 +506,6 @@ void playSeq()
     play(seq[i]);
   }
 }
+
+
+
