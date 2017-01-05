@@ -7,11 +7,12 @@
 #define playingSeq     1
 #define userTyping     3
 #define validatingSeq  4
+#define easterEgg      666
 
-#define kred    11
-#define kyellow  10
-#define kgreen   9
-#define kwhite   8
+#define kred    11 //red
+#define kyellow  10 //blue
+#define kgreen   9 //pink
+#define kwhite   8 //white
 #define start    3
 
 #define lred    7
@@ -205,6 +206,8 @@
 #define NOTE_DS8 4978
 
 // fim de código temporário pra sempre. by karina
+int easterEggPos = 0;
+const int easterEggSeq[] = { kwhite, kwhite, kyellow, kyellow, kred, kgreen, kred, kgreen };
 
 // Array for Game over song
 const int theme[] = {11,                                                  // Array for Theme song
@@ -410,7 +413,6 @@ void setup()
 //  demo();
   playStart();
   delay(500);
-  playEasterEgg();
   noSound = 50;
   Serial.begin(9600); 
   randomSeed(analogRead(0));
@@ -439,6 +441,15 @@ void loop() {
     running = 1;
     switch(state)
     {
+      case easterEgg:
+        if ( easterEggPos == 7 ){
+          playEasterEgg();
+          easterEggPos = 0;
+          state = waitingStart;
+        } else {
+          pushEasterEgg();
+        }
+        return;
       case waitingStart:   
         interval = 500;
         if (debugging){
@@ -512,6 +523,10 @@ void loop() {
         return;
           
   }
+}
+
+void pushEasterEgg(){
+  Serial.println("Implementar as teclas do easteregg!");
 }
 
 int pushStart(){
