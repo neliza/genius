@@ -441,25 +441,31 @@ void loop() {
     running = 1;
     switch(state)
     {
-      case easterEgg:
-        if ( easterEggPos == 7 ){
-          playEasterEgg();
-          easterEggPos = 0;
-          state = waitingStart;
-        } else {
-          pushEasterEgg();
-        }
-        return;
       case waitingStart:   
         interval = 500;
         if (debugging){
-          Serial.print("waitingStart");  
-          Serial.println(waitingStart);
+          //Serial.print("waitingStart");  
+          //Serial.println(waitingStart);
         }
-        key = pushStart();
-        if(key == 1){
-          state = playingSeq;
-          startingDelay();
+        
+        if ( easterEggPos == 7 ){
+          playEasterEgg();
+          easterEggPos = 0;
+        } else {
+          
+          if ( pushEasterEgg() == 1 ){
+             easterEggPos++;
+             Serial.println("acertou easterEgg!");
+          }
+          else {
+             Serial.println("errou easterEgg!");
+              easterEggPos = 0;
+              key = pushStart();
+              if(key == 1){
+                state = playingSeq;
+                startingDelay();
+              }
+          }
         }
         return;  
       case playingSeq:
@@ -525,7 +531,19 @@ void loop() {
   }
 }
 
-void pushEasterEgg(){
+int pushEasterEgg(){
+
+  int proxKeyEasterEgg = digitalRead(easterEggSeq[easterEggPos]);
+
+ if (proxKeyEasterEgg == 1){
+    Serial.print("proxKeyEasterEgg=");
+    Serial.println(proxKeyEasterEgg);
+    return 1;
+  }
+  
+  return 0;
+  
+  
   Serial.println("Implementar as teclas do easteregg!");
 }
 
