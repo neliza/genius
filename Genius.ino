@@ -397,6 +397,7 @@ int state = waitingStart;
 int key = 0; 
 int running = 0;
 int startValue = 0;
+int comecouSeqEasterEgg = 1;
 
 void setup() 
 {                
@@ -448,23 +449,28 @@ void loop() {
           //Serial.println(waitingStart);
         }
         
-        if ( easterEggPos == 7 ){
-          playEasterEgg();
-          easterEggPos = 0;
-        } else {
-          
-          if ( pushEasterEgg() == 1 ){
-             easterEggPos++;
-             Serial.println("acertou easterEgg!");
-          }
-          else {
-             Serial.println("errou easterEgg!");
-              easterEggPos = 0;
-              key = pushStart();
-              if(key == 1){
-                state = playingSeq;
-                startingDelay();
-              }
+        while(comecouSeqEasterEgg == 1){
+          delay(1500);
+          if ( easterEggPos == 7 ){
+            playEasterEgg();
+            easterEggPos = 0;
+          } else {
+                  
+            if ( pushEasterEgg() == 1 ){   
+               easterEggPos++;
+               Serial.println("acertou easterEgg!");
+            }
+            else {
+               Serial.println("errou easterEgg!");
+                easterEggPos = 0;
+                //comecouSeqEasterEgg = 0;
+                key = pushStart();
+                if(key == 1){
+                  state = playingSeq;
+                  startingDelay();
+                  comecouSeqEasterEgg =0;
+                }
+            }
           }
         }
         return;  
