@@ -462,19 +462,26 @@ void loop() {
                easterEggPos++;
                Serial.println("acertou easterEgg!");
             }
+            else if ( pushEasterEgg() == 2){
+              comecouSeqEasterEgg = 0;
+              state = playingSeq;
+              startingDelay();
+              Serial.println("start");
+            }
             else {
                Serial.println("errou easterEgg!");
                 easterEggPos = 0;
                 //comecouSeqEasterEgg = 0;
-                key = pushStart();
+                /*key = pushStart();
                 if(key == 1){
                   state = playingSeq;
                   startingDelay();
-                  comecouSeqEasterEgg =0;
-                }
+                  comecouSeqEasterEgg = 0;
+                }*/
             }
           }
         }
+        comecouSeqEasterEgg = 1;
         return;  
       case playingSeq:
         if (debugging)
@@ -719,20 +726,25 @@ void playSeq()
 }
 
 int pushEasterEgg(){
+  
+  int proxKeyEasterEgg = readKey(true); // A função readkey leva em consideração apenas os botões das cores (Vermelho, Azul, Amarelo e Branco)
+  
+  Serial.print("teste=");
+  Serial.println(proxKeyEasterEgg);
+  Serial.print("posicao=");
+  Serial.println(easterEggSeq[easterEggPos]);
 
-  //int proxKeyEasterEgg = digitalRead(easterEggSeq[easterEggPos]);
-   int proxKeyEasterEgg = readKey(true); // A função readkey leva em consideração apenas os botões das cores (Vermelho, Azul, Amarelo e Branco)
-   //proxKeyEasterEgg = proxKeyEasterEgg - 4;
-   Serial.print("teste=");
-    Serial.println(proxKeyEasterEgg);
-    Serial.print("posicao=");
-    Serial.println(easterEggSeq[easterEggPos]);
-
- if (proxKeyEasterEgg == easterEggSeq[easterEggPos]){
+  Serial.print("apertou start=");
+    Serial.println(digitalRead(start));
+  /*
+  if (digitalRead(start) == 1){
+    Serial.print("start");
+    return 2;
+  } else */if (proxKeyEasterEgg == easterEggSeq[easterEggPos]){
     Serial.print("proxKeyEasterEgg=");
     Serial.println(proxKeyEasterEgg);
     return 1;
-  }
+  } 
   
   return 0;
   
