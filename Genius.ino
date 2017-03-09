@@ -726,24 +726,28 @@ void playSeq()
 }
 
 int pushEasterEgg(){
-  
-  int proxKeyEasterEgg = readKey(true); // A função readkey leva em consideração apenas os botões das cores (Vermelho, Azul, Amarelo e Branco)
-  
-  Serial.print("teste=");
-  Serial.println(proxKeyEasterEgg);
-  Serial.print("posicao=");
-  Serial.println(easterEggSeq[easterEggPos]);
 
-  Serial.print("apertou start=");
-    Serial.println(digitalRead(start));
-  /*
-  if (digitalRead(start) == 1){
+    int btnStart = digitalRead(start);
+    Serial.print("apertou start=");
+    Serial.println(btnStart);
+  
+  if (btnStart == 1){
     Serial.print("start");
     return 2;
-  } else */if (proxKeyEasterEgg == easterEggSeq[easterEggPos]){
-    Serial.print("proxKeyEasterEgg=");
-    Serial.println(proxKeyEasterEgg);
-    return 1;
+  } else {
+      int proxKeyEasterEgg = readKey(true); // A função readkey leva em consideração apenas os botões das cores (Vermelho, Azul, Amarelo e Branco)
+
+        Serial.print("teste=");
+        Serial.println(proxKeyEasterEgg);
+        Serial.print("posicao=");
+        Serial.println(easterEggSeq[easterEggPos]);
+      
+      if (proxKeyEasterEgg == easterEggSeq[easterEggPos]){
+    
+      Serial.print("proxKeyEasterEgg=");
+      Serial.println(proxKeyEasterEgg);
+      return 1;
+    }
   } 
   
   return 0;
