@@ -1,5 +1,6 @@
 //#include <Piches.h>
 //#include <Notes.h>
+//#include <Scheduler.h>
 
 #define buzzer 15
 
@@ -13,6 +14,7 @@
 #define kyellow  10 //blue
 #define kgreen   9 //pink
 #define kwhite   8 //white
+
 #define start    3
 
 #define lred    7
@@ -438,7 +440,7 @@ void startingDelay(){
 }
 
 void loop() {
-  
+    
     running = 1;
     switch(state)
     {
@@ -448,40 +450,36 @@ void loop() {
           //Serial.print("waitingStart");  
           //Serial.println(waitingStart);
         }
-        
-        while(comecouSeqEasterEgg == 1){
-          delay(1000);
+        while(comecouSeqEasterEgg != 2){
+          comecouSeqEasterEgg = pushEasterEgg();
+          Serial.println("Tecla");
+          Serial.println(comecouSeqEasterEgg);
+          //if(comecouSeqEasterEgg == 2) return;
+          
           if ( easterEggPos == 7 ){
             playEasterEgg();
             easterEggPos = 0;
             comecouSeqEasterEgg = 0;
             Serial.println("acabou easterEgg!");
           } else {
-                  
-            if ( pushEasterEgg() == 1 ){   
+            //delay(500);      
+            if ( comecouSeqEasterEgg == 1 ){   
                easterEggPos++;
                Serial.println("acertou easterEgg!");
             }
-            else if ( pushEasterEgg() == 2){
-              comecouSeqEasterEgg = 0;
+            else if ( comecouSeqEasterEgg == 2){
+              Serial.println("start");
               state = playingSeq;
               startingDelay();
-              Serial.println("start");
+              return;
             }
             else {
-               Serial.println("errou easterEgg!");
+               Serial.println("errou easterEgg while!");
                 easterEggPos = 0;
-                //comecouSeqEasterEgg = 0;
-                /*key = pushStart();
-                if(key == 1){
-                  state = playingSeq;
-                  startingDelay();
-                  comecouSeqEasterEgg = 0;
-                }*/
             }
           }
         }
-        comecouSeqEasterEgg = 1;
+        //comecouSeqEasterEgg = 1;
         return;  
       case playingSeq:
         if (debugging)
@@ -636,7 +634,7 @@ void playWrong()
         light++;
       }
     }
-      delay(500);
+     comecouSeqEasterEgg = 1;
 }
 
 void playEasterEgg() 
@@ -726,17 +724,15 @@ void playSeq()
 }
 
 int pushEasterEgg(){
-
     int btnStart = digitalRead(start);
     Serial.print("apertou start=");
     Serial.println(btnStart);
-  
   if (btnStart == 1){
-    Serial.print("start");
+    pushStart();
+    Serial.println("start");
     return 2;
   } else {
       int proxKeyEasterEgg = readKey(true); // A função readkey leva em consideração apenas os botões das cores (Vermelho, Azul, Amarelo e Branco)
-
         Serial.print("teste=");
         Serial.println(proxKeyEasterEgg);
         Serial.print("posicao=");
@@ -751,7 +747,6 @@ int pushEasterEgg(){
   } 
   
   return 0;
-  
   
   Serial.println("Implementar as teclas do easteregg!");
 }
