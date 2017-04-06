@@ -7,12 +7,12 @@
 #define playingSeq     1
 #define userTyping     3
 #define validatingSeq  4
-#define easterEgg      666
+#define waitingEasterEgg 5
 
-#define kred    11 //red
-#define kyellow  10 //blue
-#define kgreen   9 //pink
-#define kwhite   8 //white
+#define kred    11
+#define kyellow  10
+#define kgreen   9
+#define kwhite   8
 #define start    3
 
 #define lred    7
@@ -206,8 +206,6 @@
 #define NOTE_DS8 4978
 
 // fim de código temporário pra sempre. by karina
-int easterEggPos = 0;
-const int easterEggSeq[] = { kwhite, kwhite, kyellow, kyellow, kred, kgreen, kred, kgreen };
 
 // Array for Game over song
 const int theme[] = {11,                                                  // Array for Theme song
@@ -227,48 +225,9 @@ const int death[] = {17,
 const int gameover[] = {15,                                               // Array for Game over song
   NOTE_C4, 8, NOTE_H, 8, NOTE_H, 8, NOTE_G3, 8, NOTE_H, 4, NOTE_E3, 4, NOTE_A3, 6, NOTE_B3, 6, NOTE_A3, 6, NOTE_GS3, 6, NOTE_AS3, 6, 
   NOTE_GS3, 6, NOTE_G3, 8, NOTE_F3, 8, NOTE_G3, 4};
-  const int mission[] = {};
-const int missImp[] = {NOTE_DS5,
-  NOTE_D5,NOTE_DS5,NOTE_D5,NOTE_DS5,NOTE_D5,NOTE_DS5,NOTE_D5,NOTE_DS5,NOTE_D5,NOTE_DS5,
-  NOTE_D5,NOTE_DS5,NOTE_D5,NOTE_DS5,NOTE_D5,NOTE_DS5,NOTE_D5,NOTE_DS5,NOTE_D5,NOTE_DS5,
-  NOTE_D5,NOTE_DS5,NOTE_D5,NOTE_DS5,NOTE_D5,NOTE_DS5,NOTE_D5,NOTE_DS5,NOTE_D5,NOTE_DS5,
-  NOTE_D5,NOTE_DS5,NOTE_D5,NOTE_DS5,
-  NOTE_D5,NOTE_DS5,NOTE_F5,NOTE_FS5,NOTE_G5, // Upswing 5
-  
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_AS2,NOTE_H,NOTE_C3,NOTE_H,
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_F2,NOTE_H,NOTE_FS2,NOTE_H,
-  
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_AS2,NOTE_H,NOTE_C3,NOTE_H,
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_F2,NOTE_H,NOTE_FS2,NOTE_H,
-  
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_AS2,NOTE_H,NOTE_C3,NOTE_H,
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_F2,NOTE_H,NOTE_FS2,NOTE_H,
-  
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_AS2,NOTE_H,NOTE_C3,NOTE_H,
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_F2,NOTE_H,NOTE_FS2,NOTE_H,
-  
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_AS2,NOTE_H,NOTE_C3,NOTE_H,
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_F2,NOTE_H,NOTE_FS2,NOTE_H,
-  
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_AS2,NOTE_H,NOTE_C3,NOTE_H,
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_F2,NOTE_H,NOTE_FS2,NOTE_H,
-  
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_AS2,NOTE_H,NOTE_C3,NOTE_H,
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_F2,NOTE_H,NOTE_FS2,NOTE_H,
-  
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_AS2,NOTE_H,NOTE_C3,NOTE_H,
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_F2,NOTE_H,NOTE_FS2,NOTE_H,
-  
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_AS2,NOTE_H,NOTE_C3,NOTE_H,
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_F2,NOTE_H,NOTE_FS2,NOTE_H,
-  
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_AS2,NOTE_H,NOTE_C3,NOTE_H,
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_F2,NOTE_H,NOTE_FS2,NOTE_H,
-  
-  NOTE_G2,NOTE_H
-  
-  ,-1
-};
+
+int easterEggPos = 0;
+const int easterEggSeq[] = { kwhite, kwhite, kyellow, kyellow, kred, kgreen, kred, kgreen };
 
 const int missImpDur[] = {
 
@@ -393,7 +352,7 @@ int noSound = 200;
 int seq[50];
 int posSeq = 0;
 int posType = 0;
-int state = waitingStart; 
+int state = waitingEasterEgg; 
 int key = 0; 
 int running = 0;
 int startValue = 0;
@@ -412,7 +371,6 @@ void setup()
   noSound = 0;
 //  demo();
   playStart();
-  delay(500);
   noSound = 50;
   Serial.begin(9600); 
   randomSeed(analogRead(0));
@@ -441,31 +399,34 @@ void loop() {
     running = 1;
     switch(state)
     {
+      case waitingEasterEgg:
+        if (debugging){
+          Serial.print("waitingEasterEgg");  
+          Serial.println(waitingEasterEgg);
+        }
+        key = pushEasterEgg();
+        if(key == 1){
+          //state = playingEasterEgg;
+           Serial.println("apertou easterEgg");  
+        }
+        else{
+           key = pushStart();
+           Serial.print("key ");  
+           Serial.println(key);  
+           //state = playingSeq;
+           //startingDelay();
+        }
+      return;
       case waitingStart:   
         interval = 500;
         if (debugging){
-          //Serial.print("waitingStart");  
-          //Serial.println(waitingStart);
+          Serial.print("waitingStart");  
+          Serial.println(waitingStart);
         }
-        
-        if ( easterEggPos == 7 ){
-          playEasterEgg();
-          easterEggPos = 0;
-        } else {
-          
-          if ( pushEasterEgg() == 1 ){
-             easterEggPos++;
-             Serial.println("acertou easterEgg!");
-          }
-          else {
-             Serial.println("errou easterEgg!");
-              easterEggPos = 0;
-              key = pushStart();
-              if(key == 1){
-                state = playingSeq;
-                startingDelay();
-              }
-          }
+        key = pushStart();
+        if(key == 1){
+          state = playingSeq;
+          startingDelay();
         }
         return;  
       case playingSeq:
@@ -525,26 +486,10 @@ void loop() {
                  else
                    Serial.println("Cool!");
         generateSeq();
-        state = waitingStart;
+        state = waitingEasterEgg;
         return;
           
   }
-}
-
-int pushEasterEgg(){
-
-  int proxKeyEasterEgg = digitalRead(easterEggSeq[easterEggPos]);
-
- if (proxKeyEasterEgg == 1){
-    Serial.print("proxKeyEasterEgg=");
-    Serial.println(proxKeyEasterEgg);
-    return 1;
-  }
-  
-  return 0;
-  
-  
-  Serial.println("Implementar as teclas do easteregg!");
 }
 
 int pushStart(){
@@ -723,6 +668,24 @@ void playSeq()
     play(seq[i]);
   }
 }
+int validEasterEgg(int proxKeyEasterEgg){
+   if (proxKeyEasterEgg == easterEggSeq[easterEggPos]){  
+    Serial.print("proxKeyEasterEgg=");
+    Serial.println(proxKeyEasterEgg);
+    return 1;
+  }
+  return 0;
+}
+
+int pushEasterEgg(){
+    int proxKeyEasterEgg = readKey(true); // A função readkey leva em consideração apenas os botões das cores (Vermelho, Azul, Amarelo e Branco)
+    Serial.print("proxKeyEasterEgg=");
+    Serial.println(proxKeyEasterEgg);
+    if(proxKeyEasterEgg)
+      return 1;
+    return 0;  
+}
+
 
 
 
