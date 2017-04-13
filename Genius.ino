@@ -14,6 +14,7 @@
 #define kgreen   9
 #define kwhite   8
 #define start    3
+const int botoes[]={start,kred,kyellow,kgreen,kwhite};
 
 #define lred    7
 #define lyellow 6
@@ -393,6 +394,7 @@ void startingDelay(){
     }
     delay(1000);
 }
+int botao = -1;
 
 void loop() {
   
@@ -401,21 +403,36 @@ void loop() {
     {
       case waitingEasterEgg:
         if (debugging){
-          Serial.print("waitingEasterEgg");  
+          Serial.print("waitingEasterEgg ");  
           Serial.println(waitingEasterEgg);
         }
-        key = pushEasterEgg();
-        if(key == 1){
-          //state = playingEasterEgg;
-           Serial.println("apertou easterEgg");  
+
+        botao = verificaBotao(true);
+        
+        if (botao!=0){
+          Serial.println("botao ");
+          Serial.println(botao);
+          if (botao==start){
+             state=playingSeq;
+             return;
+          }
+          else{
+            if (validaEasterEgg (botao)){
+              Serial.print("easterEggPos ");
+              Serial.println(easterEggPos);
+              easterEggPos++;
+            }
+            else{
+              easterEggPos=0;
+            }
+            if(easterEggPos==7){
+              easterEggPos=0;
+              playEasterEgg();
+            }
+          }
+          botao = 0;
         }
-        else{
-           key = pushStart();
-           Serial.print("key ");  
-           Serial.println(key);  
-           //state = playingSeq;
-           //startingDelay();
-        }
+       
       return;
       case waitingStart:   
         interval = 500;
@@ -533,6 +550,38 @@ int readKey(int validateMilis)
      }
   }
 }
+
+
+int verificaBotao(int validateMilis)
+{
+   Serial.println("verificaBotao");
+   unsigned long ms = millis();
+   int value = LOW;
+   while(value == LOW)
+   {
+     for (int i = 5; i >= 0; i--)
+     {
+       if (validateMilis)
+         if ((millis() - ms) > 3000)
+         {
+           if (debugging)
+             Serial.println("Timeout"); 
+           return 0;
+         }
+       value = digitalRead(botoes[i]);
+       
+       if (value == HIGH)
+       {
+         return botoes[i];
+       }
+     }
+  }
+  return 0;
+}
+
+
+
+
 
 void playPich(int pich, int duration)
 {
@@ -668,7 +717,7 @@ void playSeq()
     play(seq[i]);
   }
 }
-int validEasterEgg(int proxKeyEasterEgg){
+int validaEasterEgg(int proxKeyEasterEgg){
    if (proxKeyEasterEgg == easterEggSeq[easterEggPos]){  
     Serial.print("proxKeyEasterEgg=");
     Serial.println(proxKeyEasterEgg);
@@ -681,9 +730,11 @@ int pushEasterEgg(){
     int proxKeyEasterEgg = readKey(true); // A função readkey leva em consideração apenas os botões das cores (Vermelho, Azul, Amarelo e Branco)
     Serial.print("proxKeyEasterEgg=");
     Serial.println(proxKeyEasterEgg);
-    if(proxKeyEasterEgg)
+    if(validaEasterEgg(proxKeyEasterEgg)){
+      easterEggPos++;
       return 1;
-    return 0;  
+    }
+    return 0;
 }
 
 
