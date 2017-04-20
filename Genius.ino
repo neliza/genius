@@ -21,7 +21,7 @@ const int botoes[]={start,kred,kyellow,kgreen,kwhite};
 #define lgreen  5
 #define lwhite  4
 
-#define debugging 1
+#define debugging 0
 
 // início de código temporário pra sempre
 
@@ -397,7 +397,7 @@ void startingDelay(){
 int botao = -1;
 
 void loop() {
-  
+    
     running = 1;
     switch(state)
     {
@@ -410,16 +410,18 @@ void loop() {
         botao = verificaBotao(true);
         
         if (botao!=0){
-          Serial.println("botao ");
+          Serial.print("botao apertado: ");
           Serial.println(botao);
           if (botao==start){
              state=playingSeq;
+             startingDelay();
              return;
           }
           else{
             if (validaEasterEgg (botao)){
               Serial.print("easterEggPos ");
               Serial.println(easterEggPos);
+              delay(500);
               easterEggPos++;
             }
             else{
@@ -554,7 +556,6 @@ int readKey(int validateMilis)
 
 int verificaBotao(int validateMilis)
 {
-   Serial.println("verificaBotao");
    unsigned long ms = millis();
    int value = LOW;
    while(value == LOW)
