@@ -1,0 +1,10 @@
+int easterEggPos = 0;
+int interval = 500;
+int noSound = 200;
+int seq[50];
+int posSeq = 0;
+int posType = 0;
+int state = WAITINGSTART; 
+int key = 0; 
+int running = 0;
+int startValue = 0;
