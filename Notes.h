@@ -179,104 +179,7 @@
 #define NOTE_D8  4699
 #define NOTE_DS8 4978
 
-// Array for Game over song
-const int theme[] = {11,                                                  // Array for Theme song
-  NOTE_E4, 8, NOTE_E4, 8, NOTE_H, 8, NOTE_E4, 8, NOTE_H, 8, NOTE_C4, 8, NOTE_E4, 8, NOTE_H, 8, NOTE_G4, 8, NOTE_H, 3, NOTE_G3, 8};
-const int life[] = {6,                                                    // Array for 1-up sound effect
-  NOTE_E5, 10, NOTE_G5, 10, NOTE_E6, 10, NOTE_C6, 10, NOTE_D6, 10, NOTE_G6, 10};
-const int flagpole[] = {27,                                               // Array for Flag pole sound effect & song
-  NOTE_G2, 10, NOTE_C3, 10, NOTE_E3, 10, NOTE_G3, 10, NOTE_C4, 10, NOTE_E4, 10, NOTE_G4, 3, NOTE_E4, 3, NOTE_GS2, 10, NOTE_C3, 10, 
-  NOTE_DS3, 10, NOTE_GS3, 10, NOTE_C4, 10, NOTE_DS4, 10, NOTE_GS4, 3, NOTE_DS4, 3, NOTE_AS2, 10, NOTE_D3, 10, NOTE_F3, 10, 
-  NOTE_AS3, 10, NOTE_D4, 10, NOTE_F4, 10, NOTE_AS4, 3, NOTE_B4, 10, NOTE_B4, 10, NOTE_B4, 10, NOTE_C5, 2};
-
-// Array for Death sound effect & song
-const int death[] = {17,
-  NOTE_C4, 32, NOTE_CS4, 32, NOTE_D4, 16, NOTE_H, 4,
-  NOTE_H, 4, NOTE_B3, 8, NOTE_F4, 8, NOTE_H, 8, NOTE_F4, 8, NOTE_F4, 6, 
-  NOTE_E4, 6, NOTE_D4, 6, NOTE_C4, 8, NOTE_E3, 8, NOTE_H, 8, NOTE_E3, 8, NOTE_C3, 8};
-const int gameover[] = {15,                                               // Array for Game over song
-  NOTE_C4, 8, NOTE_H, 8, NOTE_H, 8, NOTE_G3, 8, NOTE_H, 4, NOTE_E3, 4, NOTE_A3, 6, NOTE_B3, 6, NOTE_A3, 6, NOTE_GS3, 6, NOTE_AS3, 6, 
-  NOTE_GS3, 6, NOTE_G3, 8, NOTE_F3, 8, NOTE_G3, 4};
-  const int mission[] = {};
-const int missImp[] = {NOTE_DS5,
-  NOTE_D5,NOTE_DS5,NOTE_D5,NOTE_DS5,NOTE_D5,NOTE_DS5,NOTE_D5,NOTE_DS5,NOTE_D5,NOTE_DS5,
-  NOTE_D5,NOTE_DS5,NOTE_D5,NOTE_DS5,NOTE_D5,NOTE_DS5,NOTE_D5,NOTE_DS5,NOTE_D5,NOTE_DS5,
-  NOTE_D5,NOTE_DS5,NOTE_D5,NOTE_DS5,NOTE_D5,NOTE_DS5,NOTE_D5,NOTE_DS5,NOTE_D5,NOTE_DS5,
-  NOTE_D5,NOTE_DS5,NOTE_D5,NOTE_DS5,
-  NOTE_D5,NOTE_DS5,NOTE_F5,NOTE_FS5,NOTE_G5, // Upswing 5
-  
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_AS2,NOTE_H,NOTE_C3,NOTE_H,
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_F2,NOTE_H,NOTE_FS2,NOTE_H,
-  
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_AS2,NOTE_H,NOTE_C3,NOTE_H,
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_F2,NOTE_H,NOTE_FS2,NOTE_H,
-  
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_AS2,NOTE_H,NOTE_C3,NOTE_H,
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_F2,NOTE_H,NOTE_FS2,NOTE_H,
-  
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_AS2,NOTE_H,NOTE_C3,NOTE_H,
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_F2,NOTE_H,NOTE_FS2,NOTE_H,
-  
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_AS2,NOTE_H,NOTE_C3,NOTE_H,
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_F2,NOTE_H,NOTE_FS2,NOTE_H,
-  
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_AS2,NOTE_H,NOTE_C3,NOTE_H,
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_F2,NOTE_H,NOTE_FS2,NOTE_H,
-  
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_AS2,NOTE_H,NOTE_C3,NOTE_H,
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_F2,NOTE_H,NOTE_FS2,NOTE_H,
-  
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_AS2,NOTE_H,NOTE_C3,NOTE_H,
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_F2,NOTE_H,NOTE_FS2,NOTE_H,
-  
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_AS2,NOTE_H,NOTE_C3,NOTE_H,
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_F2,NOTE_H,NOTE_FS2,NOTE_H,
-  
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_AS2,NOTE_H,NOTE_C3,NOTE_H,
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_F2,NOTE_H,NOTE_FS2,NOTE_H,
-  
-  NOTE_G2,NOTE_H
-  
-  ,-1
-};
-
-const int missImpDur[] = {
-
-  50,50,50,50,50,50,50,50,50,50,
-  50,50,50,50,50,50,50,50,50,50,
-  50,50,50,50,50,50,50,50,50,50,
-  50,50,50,50,
-  50,50,50,50,50,50,
-  
-  200,400,200,400,200,200,200,200,              //2000  
-  200,400,200,400,200,200,200,200,  
-  
-  200,400,200,400,200,200,200,200,              //2000 
-  200,400,200,400,200,200,200,200,
-  
-  200,400,200,400,200,200,200,200,              
-  200,400,200,400,200,200,200,200,  
-  
-  200,400,200,400,200,200,200,200,              
-  200,400,200,400,200,200,200,200,
-  
-  200,400,200,400,200,200,200,200,           
-  200,400,200,400,200,200,200,200,  
-  
-  200,400,200,400,200,200,200,200,       
-  200,400,200,400,200,200,200,200,
-  
-  200,400,200,400,200,200,200,200,          
-  200,400,200,400,200,200,200,200,  
-  
-  200,400,200,400,200,200,200,200,              
-  200,400,200,400,200,200,200,200,
-  
-  400,-1
-};
-
-
-const int missImp2 [] = {
+const int NOTES_MISS_IMP [] = {
   NOTE_G3,
   
   NOTE_G3,0,NOTE_G3,0,NOTE_AS3,0,NOTE_C4,0,
@@ -317,7 +220,7 @@ const int missImp2 [] = {
 
 };
 
-const int missImp2Dur [] = {
+const int TIME_NOTES_MISS_IMP [] = {
 
   2025,    //+25 for the delayed melody
   
@@ -357,3 +260,13 @@ const int missImp2Dur [] = {
   
   25,25,25,25,25,25,25,25,300, 0
 };
+
+const int LIFE[] = {6,                                                    // Array for 1-up sound effect
+  NOTE_E5, 10, NOTE_G5, 10, NOTE_E6, 10, NOTE_C6, 10, NOTE_D6, 10, NOTE_G6, 10};
+
+
+// Array for DEATH sound effect & song
+const int DEATH[] = {17,
+  NOTE_C4, 32, NOTE_CS4, 32, NOTE_D4, 16, NOTE_H, 4,
+  NOTE_H, 4, NOTE_B3, 8, NOTE_F4, 8, NOTE_H, 8, NOTE_F4, 8, NOTE_F4, 6, 
+  NOTE_E4, 6, NOTE_D4, 6, NOTE_C4, 8, NOTE_E3, 8, NOTE_H, 8, NOTE_E3, 8, NOTE_C3, 8};
