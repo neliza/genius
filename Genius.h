@@ -1,5 +1,5 @@
-#include <C:/Users/garagebh/Documents/WomenBH/28_12_2017/Genius/Notes.h>
-#include <C:/Users/garagebh/Documents/WomenBH/28_12_2017/Genius/Constants.h>
+#include <C:/Users/garagebh/Documents/WomenBH/genius-refactoring/Notes.h>
+#include <C:/Users/garagebh/Documents/WomenBH/genius-refactoring/Constants.h>
 
 int interval = 500;
 int noSound = 200;
@@ -38,12 +38,12 @@ void startingDelay(){
     delay(500);
     
     //Acende todas as luzes
-    for (int thisLight = L_PINK; thisLight <= L_WHITE; thisLight++) {
+    for (int thisLight = L_PINK; thisLight <= L_RED; thisLight++) {
       digitalWrite(thisLight, HIGH);  
     }
     delay(500);
     //Apaga todas as luzes
-    for (int thisLight = L_PINK; thisLight <= L_WHITE; thisLight++) {
+    for (int thisLight = L_PINK; thisLight <= L_RED; thisLight++) {
       digitalWrite(thisLight, LOW);  
     }
     delay(1000);
@@ -88,9 +88,8 @@ void loop() {
           }
           botao = 0;
         }
-        
+       
       return;
-      
       case WAITING_START:   
         interval = 500;
         if (DEBUGGING){
@@ -98,7 +97,6 @@ void loop() {
           Serial.println(WAITING_START);
         }
         key = pushStart();
-        
         if(key == 1){
           state = PLAYING_SEQ;
           startingDelay();
@@ -115,18 +113,13 @@ void loop() {
         if (DEBUGGING)
           Serial.println("USER_TYPING");  
         key = 1;
-        Serial.println("key = 1");
         int ok = true;
-        Serial.print("ok = ");
-        Serial.println(ok);
         while(ok)
         {
             key = readKey(true);
-            Serial.print("botao pressionado");  
-            Serial.println(key); 
             if (key == 0)
               break;
-            play(retornaPortaLed(key));
+            play(key-4);
             ok = validateSeq(key);
             if (DEBUGGING)
             {
@@ -137,7 +130,6 @@ void loop() {
             {
               if (posType == posSeq)
               {
-                Serial.print("Antes do delay");
                 delay(1000);
                 posSeq++;
                 state = PLAYING_SEQ;
@@ -184,46 +176,20 @@ int pushStart(){
   
   return 0;
 }
-int retornaPortaLed(int botao){
-  if(botao == BTN_WHITE){
-    return L_WHITE;
-  }
-  else if(botao == BTN_RED){
-    return L_RED;
-  }
-  else if(botao == BTN_PINK){
-    return L_PINK;
-  }
-  else if(botao == BTN_BLUE){
-    return L_BLUE;
-  }
-  return 0;
-}
 
 int validateSeq(int key)
 {
-   if (DEBUGGING){
-    Serial.print("Seq[posType]: "); 
-    Serial.println(seq[posType]); 
-    Serial.print("Posição: "); 
-    Serial.println(posType); 
-    Serial.print("retornaPortaLed: "); 
-    Serial.println(retornaPortaLed(key)); 
-    Serial.print("key: "); 
-    Serial.println(key); 
-   }
-  return retornaPortaLed(key) == seq[posType];
+  
+  return (key-4) == seq[posType]; // (key -4) = key to LED
 }
 
 int readKey(int validateMilis)
 {
-  if (DEBUGGING)
-     Serial.println("ReadKey"); 
    unsigned long ms = millis();
    int value = LOW;
    while(value == LOW)
    {
-     for (int i = BTN_PINK; i >= BTN_WHITE; i--)
+     for (int i = BTN_WHITE; i >= BTN_PINK; i--)
      {
        if (validateMilis)
          if ((millis() - ms) > 3000)
@@ -257,7 +223,7 @@ int verificaBotao(int validateMilis)
              Serial.println("Timeout"); 
            return 0;
          }
-        value = digitalRead(BOTOES_SEQ[i]);
+       value = digitalRead(BOTOES_SEQ[i]);
        
        if (value == HIGH)
        {
@@ -285,7 +251,7 @@ void playStart()
       noTone(BUZZER);                                                 // Silence the note that was playing
 
       digitalWrite(light, LOW);  
-      if (light == L_WHITE) {
+      if (light == L_RED) {
         light = L_PINK;
       } else {
         light++;
@@ -308,7 +274,7 @@ void playWrong()
       noTone(BUZZER);                                                 // Silence the note that was playing
 
      digitalWrite(light, LOW);  
-      if (light == L_WHITE) {
+      if (light == L_RED) {
         light = L_PINK;
       } else if (DEATH[thisNote] != NOTE_H) {
         light++;
@@ -329,7 +295,7 @@ void playEasterEgg()
        delay(TIME_NOTES_MISS_IMP[x]);
        noTone(BUZZER);
        digitalWrite(light, LOW);  
-       if (light == L_WHITE) {
+       if (light == L_RED) {
           light = L_PINK;
        } else {
           light++;
@@ -366,16 +332,16 @@ void play(int pich)
 {
   switch(pich)
   {
-    case L_RED:
+    case 7:
       blink(L_RED,NOTE_C4);
       break;
-    case L_WHITE:
+    case 6:
       blink(L_WHITE,NOTE_E4);
       break;
-    case L_BLUE:
+    case 5:
       blink(L_BLUE,NOTE_G4);
       break;
-    case L_PINK:
+    case 4:
       blink(L_PINK,NOTE_AS4);
       break;
   }  
@@ -390,13 +356,9 @@ void generateSeq()
   for (int i = 0; i < 50; i++)
   {
     seq[i] = random(4) + 4;
-    if (DEBUGGING) {
-      Serial.print(seq[i]);
-      Serial.print(", ");
-    }
+    if (DEBUGGING)
+      Serial.println(seq[i]);
   }
-  if (DEBUGGING)
-      Serial.println("");
 }
 
 void playSeq()
