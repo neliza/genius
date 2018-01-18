@@ -1,418 +1,31 @@
-//#include <Piches.h>
-//#include <Notes.h>
-
-#define buzzer 15
-
-#define waitingStart   0 
-#define playingSeq     1
-#define userTyping     3
-#define validatingSeq  4
-#define easterEgg      666
-
-#define kred    11 //red
-#define kyellow  10 //blue
-#define kgreen   9 //pink
-#define kwhite   8 //white
-#define start    3
-
-#define lred    7
-#define lyellow 6
-#define lgreen  5
-#define lwhite  4
-
-#define debugging 1
-
-// início de código temporário pra sempre
-
-#define NOTE_H   0
-#define NOTE_B0  31
-#define NOTE_C1  33
-#define NOTE_CS1 35
-#define NOTE_D1  37
-#define NOTE_DS1 39
-#define NOTE_E1  41
-#define NOTE_F1  44
-#define NOTE_FS1 46
-#define NOTE_G1  49
-#define NOTE_GS1 52
-#define NOTE_A1  55
-#define NOTE_AS1 58
-#define NOTE_B1  62
-#define NOTE_C2  65
-#define NOTE_CS2 69
-#define NOTE_D2  73
-#define NOTE_DS2 78
-#define NOTE_E2  82
-#define NOTE_F2  87
-#define NOTE_FS2 93
-#define NOTE_G2  98
-#define NOTE_GS2 104
-#define NOTE_A2  110
-#define NOTE_AS2 117
-#define NOTE_B2  123
-#define NOTE_C3  131
-#define NOTE_CS3 139
-#define NOTE_D3  147
-#define NOTE_DS3 156
-#define NOTE_E3  165
-#define NOTE_F3  175
-#define NOTE_FS3 185
-#define NOTE_G3  196
-#define NOTE_GS3 208
-#define NOTE_A3  220
-#define NOTE_AS3 233
-#define NOTE_B3  247
-#define NOTE_C4  262
-#define NOTE_CS4 277
-#define NOTE_D4  294
-#define NOTE_DS4 311
-#define NOTE_E4  330
-#define NOTE_F4  349
-#define NOTE_FS4 370
-#define NOTE_G4  392
-#define NOTE_GS4 415
-#define NOTE_A4  440
-#define NOTE_AS4 466
-#define NOTE_B4  494
-#define NOTE_C5  523
-#define NOTE_CS5 554
-#define NOTE_D5  587
-#define NOTE_DS5 622
-#define NOTE_E5  659
-#define NOTE_F5  698
-#define NOTE_FS5 740
-#define NOTE_G5  784
-#define NOTE_GS5 831
-#define NOTE_A5  880
-#define NOTE_AS5 932
-#define NOTE_B5  988
-#define NOTE_C6  1047
-#define NOTE_CS6 1109
-#define NOTE_D6  1175
-#define NOTE_DS6 1245
-#define NOTE_E6  1319
-#define NOTE_F6  1397
-#define NOTE_FS6 1480
-#define NOTE_G6  1568
-#define NOTE_GS6 1661
-#define NOTE_A6  1760
-#define NOTE_AS6 1865
-#define NOTE_B6  1976
-#define NOTE_C7  2093
-#define NOTE_CS7 2217
-#define NOTE_D7  2349
-#define NOTE_DS7 2489
-#define NOTE_E7  2637
-#define NOTE_F7  2794
-#define NOTE_FS7 2960
-#define NOTE_G7  3136
-#define NOTE_GS7 3322
-#define NOTE_A7  3520
-#define NOTE_AS7 3729
-#define NOTE_B7  3951
-#define NOTE_C8  4186
-#define NOTE_CS8 4435
-#define NOTE_D8  4699
-#define NOTE_DS8 4978
-
-//Piche
-#define NOTE_C1  33
-#define NOTE_CS1 35
-#define NOTE_D1  37
-#define NOTE_DS1 39
-#define NOTE_E1  41
-#define NOTE_F1  44
-#define NOTE_FS1 46
-#define NOTE_G1  49
-#define NOTE_GS1 52
-#define NOTE_A1  55
-#define NOTE_AS1 58
-#define NOTE_B1  62
-#define NOTE_C2  65
-#define NOTE_CS2 69
-#define NOTE_D2  73
-#define NOTE_DS2 78
-#define NOTE_E2  82
-#define NOTE_F2  87
-#define NOTE_FS2 93
-#define NOTE_G2  98
-#define NOTE_GS2 104
-#define NOTE_A2  110
-#define NOTE_AS2 117
-#define NOTE_B2  123
-#define NOTE_C3  131
-#define NOTE_CS3 139
-#define NOTE_D3  147
-#define NOTE_DS3 156
-#define NOTE_E3  165
-#define NOTE_F3  175
-#define NOTE_FS3 185
-#define NOTE_G3  196
-#define NOTE_GS3 208
-#define NOTE_A3  220
-#define NOTE_AS3 233
-#define NOTE_B3  247
-#define NOTE_C4  262
-#define NOTE_CS4 277
-#define NOTE_D4  294
-#define NOTE_DS4 311
-#define NOTE_E4  330
-#define NOTE_F4  349
-#define NOTE_FS4 370
-#define NOTE_G4  392
-#define NOTE_GS4 415
-#define NOTE_A4  440
-#define NOTE_AS4 466
-#define NOTE_B4  494
-#define NOTE_C5  523
-#define NOTE_CS5 554
-#define NOTE_D5  587
-#define NOTE_DS5 622
-#define NOTE_E5  659
-#define NOTE_F5  698
-#define NOTE_FS5 740
-#define NOTE_G5  784
-#define NOTE_GS5 831
-#define NOTE_A5  880
-#define NOTE_AS5 932
-#define NOTE_B5  988
-#define NOTE_C6  1047
-#define NOTE_CS6 1109
-#define NOTE_D6  1175
-#define NOTE_DS6 1245
-#define NOTE_E6  1319
-#define NOTE_F6  1397
-#define NOTE_FS6 1480
-#define NOTE_G6  1568
-#define NOTE_GS6 1661
-#define NOTE_A6  1760
-#define NOTE_AS6 1865
-#define NOTE_B6  1976
-#define NOTE_C7  2093
-#define NOTE_CS7 2217
-#define NOTE_D7  2349
-#define NOTE_DS7 2489
-#define NOTE_E7  2637
-#define NOTE_F7  2794
-#define NOTE_FS7 2960
-#define NOTE_G7  3136
-#define NOTE_GS7 3322
-#define NOTE_A7  3520
-#define NOTE_AS7 3729
-#define NOTE_B7  3951
-#define NOTE_C8  4186
-#define NOTE_CS8 4435
-#define NOTE_D8  4699
-#define NOTE_DS8 4978
-
-// fim de código temporário pra sempre. by karina
-int easterEggPos = 0;
-const int easterEggSeq[] = { kwhite, kwhite, kyellow, kyellow, kred, kgreen, kred, kgreen };
-
-// Array for Game over song
-const int theme[] = {11,                                                  // Array for Theme song
-  NOTE_E4, 8, NOTE_E4, 8, NOTE_H, 8, NOTE_E4, 8, NOTE_H, 8, NOTE_C4, 8, NOTE_E4, 8, NOTE_H, 8, NOTE_G4, 8, NOTE_H, 3, NOTE_G3, 8};
-const int life[] = {6,                                                    // Array for 1-up sound effect
-  NOTE_E5, 10, NOTE_G5, 10, NOTE_E6, 10, NOTE_C6, 10, NOTE_D6, 10, NOTE_G6, 10};
-const int flagpole[] = {27,                                               // Array for Flag pole sound effect & song
-  NOTE_G2, 10, NOTE_C3, 10, NOTE_E3, 10, NOTE_G3, 10, NOTE_C4, 10, NOTE_E4, 10, NOTE_G4, 3, NOTE_E4, 3, NOTE_GS2, 10, NOTE_C3, 10, 
-  NOTE_DS3, 10, NOTE_GS3, 10, NOTE_C4, 10, NOTE_DS4, 10, NOTE_GS4, 3, NOTE_DS4, 3, NOTE_AS2, 10, NOTE_D3, 10, NOTE_F3, 10, 
-  NOTE_AS3, 10, NOTE_D4, 10, NOTE_F4, 10, NOTE_AS4, 3, NOTE_B4, 10, NOTE_B4, 10, NOTE_B4, 10, NOTE_C5, 2};
-
-// Array for Death sound effect & song
-const int death[] = {17,
-  NOTE_C4, 32, NOTE_CS4, 32, NOTE_D4, 16, NOTE_H, 4,
-  NOTE_H, 4, NOTE_B3, 8, NOTE_F4, 8, NOTE_H, 8, NOTE_F4, 8, NOTE_F4, 6, 
-  NOTE_E4, 6, NOTE_D4, 6, NOTE_C4, 8, NOTE_E3, 8, NOTE_H, 8, NOTE_E3, 8, NOTE_C3, 8};
-const int gameover[] = {15,                                               // Array for Game over song
-  NOTE_C4, 8, NOTE_H, 8, NOTE_H, 8, NOTE_G3, 8, NOTE_H, 4, NOTE_E3, 4, NOTE_A3, 6, NOTE_B3, 6, NOTE_A3, 6, NOTE_GS3, 6, NOTE_AS3, 6, 
-  NOTE_GS3, 6, NOTE_G3, 8, NOTE_F3, 8, NOTE_G3, 4};
-  const int mission[] = {};
-const int missImp[] = {NOTE_DS5,
-  NOTE_D5,NOTE_DS5,NOTE_D5,NOTE_DS5,NOTE_D5,NOTE_DS5,NOTE_D5,NOTE_DS5,NOTE_D5,NOTE_DS5,
-  NOTE_D5,NOTE_DS5,NOTE_D5,NOTE_DS5,NOTE_D5,NOTE_DS5,NOTE_D5,NOTE_DS5,NOTE_D5,NOTE_DS5,
-  NOTE_D5,NOTE_DS5,NOTE_D5,NOTE_DS5,NOTE_D5,NOTE_DS5,NOTE_D5,NOTE_DS5,NOTE_D5,NOTE_DS5,
-  NOTE_D5,NOTE_DS5,NOTE_D5,NOTE_DS5,
-  NOTE_D5,NOTE_DS5,NOTE_F5,NOTE_FS5,NOTE_G5, // Upswing 5
-  
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_AS2,NOTE_H,NOTE_C3,NOTE_H,
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_F2,NOTE_H,NOTE_FS2,NOTE_H,
-  
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_AS2,NOTE_H,NOTE_C3,NOTE_H,
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_F2,NOTE_H,NOTE_FS2,NOTE_H,
-  
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_AS2,NOTE_H,NOTE_C3,NOTE_H,
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_F2,NOTE_H,NOTE_FS2,NOTE_H,
-  
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_AS2,NOTE_H,NOTE_C3,NOTE_H,
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_F2,NOTE_H,NOTE_FS2,NOTE_H,
-  
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_AS2,NOTE_H,NOTE_C3,NOTE_H,
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_F2,NOTE_H,NOTE_FS2,NOTE_H,
-  
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_AS2,NOTE_H,NOTE_C3,NOTE_H,
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_F2,NOTE_H,NOTE_FS2,NOTE_H,
-  
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_AS2,NOTE_H,NOTE_C3,NOTE_H,
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_F2,NOTE_H,NOTE_FS2,NOTE_H,
-  
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_AS2,NOTE_H,NOTE_C3,NOTE_H,
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_F2,NOTE_H,NOTE_FS2,NOTE_H,
-  
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_AS2,NOTE_H,NOTE_C3,NOTE_H,
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_F2,NOTE_H,NOTE_FS2,NOTE_H,
-  
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_AS2,NOTE_H,NOTE_C3,NOTE_H,
-  NOTE_G2,NOTE_H,NOTE_G2,NOTE_H,NOTE_F2,NOTE_H,NOTE_FS2,NOTE_H,
-  
-  NOTE_G2,NOTE_H
-  
-  ,-1
-};
-
-const int missImpDur[] = {
-
-  50,50,50,50,50,50,50,50,50,50,
-  50,50,50,50,50,50,50,50,50,50,
-  50,50,50,50,50,50,50,50,50,50,
-  50,50,50,50,
-  50,50,50,50,50,50,
-  
-  200,400,200,400,200,200,200,200,              //2000  
-  200,400,200,400,200,200,200,200,  
-  
-  200,400,200,400,200,200,200,200,              //2000 
-  200,400,200,400,200,200,200,200,
-  
-  200,400,200,400,200,200,200,200,              
-  200,400,200,400,200,200,200,200,  
-  
-  200,400,200,400,200,200,200,200,              
-  200,400,200,400,200,200,200,200,
-  
-  200,400,200,400,200,200,200,200,           
-  200,400,200,400,200,200,200,200,  
-  
-  200,400,200,400,200,200,200,200,       
-  200,400,200,400,200,200,200,200,
-  
-  200,400,200,400,200,200,200,200,          
-  200,400,200,400,200,200,200,200,  
-  
-  200,400,200,400,200,200,200,200,              
-  200,400,200,400,200,200,200,200,
-  
-  400,-1
-};
-
-
-const int missImp2 [] = {
-  NOTE_G3,
-  
-  NOTE_G3,0,NOTE_G3,0,NOTE_AS3,0,NOTE_C4,0,
-  NOTE_G3,0,NOTE_G3,0,NOTE_F3,0,NOTE_FS3,0,
-  
-  NOTE_G3,0,NOTE_G3,0,NOTE_AS3,0,NOTE_C4,0,
-  NOTE_G3,0,NOTE_G3,0,NOTE_F3,0,NOTE_FS3,0,
- 
-  NOTE_AS5,0,NOTE_G5,0,NOTE_D5,0,   
-  NOTE_AS5,0,NOTE_G5,0,NOTE_CS5,0,
-  NOTE_AS5,0,NOTE_G5,0,NOTE_C5,0,   
-  NOTE_AS4,0,NOTE_C5,0,
- 
-  NOTE_AS4,NOTE_G4,NOTE_FS5,0,   
-  NOTE_AS4,NOTE_G4,NOTE_F5,0,
-  NOTE_AS4,NOTE_G4,NOTE_E5,0,    
-  NOTE_DS5,NOTE_D5,0,
-  
-  NOTE_AS4,NOTE_D5,NOTE_G5,NOTE_AS4,NOTE_D5,NOTE_G5,NOTE_AS4,NOTE_D5,0,    
-  NOTE_AS4,NOTE_D5,NOTE_G5,NOTE_AS4,NOTE_D5,NOTE_G5,NOTE_AS4,NOTE_D5,0    ,
-  NOTE_CS5,NOTE_F5,NOTE_AS5,NOTE_CS5,NOTE_F5,NOTE_AS5,NOTE_CS5,NOTE_F5,0    ,
-  NOTE_DS5,NOTE_G5,NOTE_C6,NOTE_DS5,NOTE_G5,NOTE_C6,NOTE_DS5,NOTE_G5,0,
-  NOTE_AS4,NOTE_D5,NOTE_G5,NOTE_AS4,NOTE_D5,NOTE_G5,NOTE_AS4,NOTE_D5,0    ,
-  NOTE_AS4,NOTE_D5,NOTE_G5,NOTE_AS4,NOTE_D5,NOTE_G5,NOTE_AS4,NOTE_D5,0    ,
-  NOTE_GS4,NOTE_C5,NOTE_F5,NOTE_GS4,NOTE_C5,NOTE_F5,NOTE_GS4,NOTE_C5,0     ,
-  NOTE_A4,NOTE_CS5,NOTE_FS5,NOTE_A4,NOTE_CS5,NOTE_FS5,NOTE_A4,NOTE_CS5,0,
-
-  NOTE_AS4,NOTE_D5,NOTE_G5,NOTE_AS4,NOTE_D5,NOTE_G5,NOTE_AS4,NOTE_D5,0    ,
-  NOTE_AS4,NOTE_D5,NOTE_G5,NOTE_AS4,NOTE_D5,NOTE_G5,NOTE_AS4,NOTE_D5,0    ,
-  NOTE_CS5,NOTE_F5,NOTE_AS5,NOTE_CS5,NOTE_F5,NOTE_AS5,NOTE_CS5,NOTE_F5,0    ,
-  NOTE_DS5,NOTE_G5,NOTE_C6,NOTE_DS5,NOTE_G5,NOTE_C6,NOTE_DS5,NOTE_G5,0,
-  NOTE_AS4,NOTE_D5,NOTE_G5,NOTE_AS4,NOTE_D5,NOTE_G5,NOTE_AS4,NOTE_D5,0    ,
-  NOTE_AS4,NOTE_D5,NOTE_G5,NOTE_AS4,NOTE_D5,NOTE_G5,NOTE_AS4,NOTE_D5,0    ,
-  NOTE_GS4,NOTE_C5,NOTE_F5,NOTE_GS4,NOTE_C5,NOTE_F5,NOTE_GS4,NOTE_C5,0     ,
-  NOTE_A4,NOTE_CS5,NOTE_FS5,NOTE_A4,NOTE_CS5,NOTE_FS5,NOTE_A4,NOTE_CS5,0,
-  
-  NOTE_AS4,NOTE_D5,NOTE_G5,NOTE_AS4,NOTE_D5,NOTE_G5,NOTE_AS4,NOTE_D5,0,-1
-
-};
-
-const int missImp2Dur [] = {
-
-  2025,    //+25 for the delayed melody
-  
-  200,400,200,400,200,200,200,200,            
-  200,400,200,400,200,200,200,200,  
- 
-  200,400,200,400,200,200,200,200,              
-  200,400,200,400,200,200,200,200,
-  
-  150,50,150,50,800,800,   
-  150,50,150,50,800,800,
-  150,50,150,50,800,800,   
-  150,50,400,1400,
-  
-  200,200,600,1000,   
-  200,200,600,1000,
-  200,200,600,1000,   
-  200,400,1400,
-  
-  25,25,25,25,25,25,25,25,380,    
-  25,25,25,25,25,25,25,25,380,    
-  25,25,25,25,25,25,25,25,180, 
-  25,25,25,25,25,25,25,25,180,          // - 20 pause for arduino arpeggio, remind me of the good old 8-bit stuff ;)     
-  25,25,25,25,25,25,25,25,380,    
-  25,25,25,25,25,25,25,25,380,    
-  25,25,25,25,25,25,25,25,180, 
-  25,25,25,25,25,25,25,25,180,       
-
-  25,25,25,25,25,25,25,25,380,    
-  25,25,25,25,25,25,25,25,380,    
-  25,25,25,25,25,25,25,25,180, 
-  25,25,25,25,25,25,25,25,180,                    
-  25,25,25,25,25,25,25,25,380,    
-  25,25,25,25,25,25,25,25,380,    
-  25,25,25,25,25,25,25,25,180, 
-  25,25,25,25,25,25,25,25,180,       
-  
-  25,25,25,25,25,25,25,25,300, 0
-};
+#include <C:/Users/garagebh/Documents/WomenBH/2018_01_04/Genius/Notes.h>
+#include <C:/Users/garagebh/Documents/WomenBH/2018_01_04/Genius/Constants.h>
 
 int interval = 500;
 int noSound = 200;
 int seq[50];
 int posSeq = 0;
 int posType = 0;
-int state = waitingStart; 
+int state = WAITING_EASTER_EGG; 
 int key = 0; 
 int running = 0;
 int startValue = 0;
+int easterEggPos = 0;
 
 void setup() 
 {                
-  pinMode(lred, OUTPUT);     
-  pinMode(lyellow, OUTPUT);     
-  pinMode(lgreen, OUTPUT);     
-  pinMode(lwhite, OUTPUT);
-  pinMode(kred, INPUT); 
-  pinMode(kwhite, INPUT);      
-  pinMode(kgreen, INPUT);    
-  pinMode(kyellow, INPUT);    
-  pinMode(start, INPUT);      
+  pinMode(L_RED, OUTPUT);     
+  pinMode(L_WHITE, OUTPUT);     
+  pinMode(L_BLUE, OUTPUT);     
+  pinMode(L_PINK, OUTPUT);
+  pinMode(BTN_WHITE, INPUT); 
+  pinMode(BTN_PINK, INPUT);      
+  pinMode(BTN_BLUE, INPUT);    
+  pinMode(BTN_RED, INPUT);    
+  pinMode(BTN_START, INPUT);      
   noSound = 0;
-//  demo();
+
   playStart();
-  delay(500);
   noSound = 50;
   Serial.begin(9600); 
   randomSeed(analogRead(0));
@@ -425,69 +38,99 @@ void startingDelay(){
     delay(500);
     
     //Acende todas as luzes
-    for (int thisLight = lwhite; thisLight <= lred; thisLight++) {
+    for (int thisLight = L_PINK; thisLight <= L_WHITE; thisLight++) {
       digitalWrite(thisLight, HIGH);  
     }
     delay(500);
     //Apaga todas as luzes
-    for (int thisLight = lwhite; thisLight <= lred; thisLight++) {
+    for (int thisLight = L_PINK; thisLight <= L_WHITE; thisLight++) {
       digitalWrite(thisLight, LOW);  
     }
     delay(1000);
 }
+int botao = -1;
 
 void loop() {
-  
+    Serial.print("botao start apertado? ");
+    Serial.println(digitalRead(BTN_START));
     running = 1;
+    
     switch(state)
     {
-      case waitingStart:   
-        interval = 500;
-        if (debugging){
-          //Serial.print("waitingStart");  
-          //Serial.println(waitingStart);
+      case WAITING_EASTER_EGG:
+        if (DEBUGGING){
+          Serial.print("WAITING_EASTER_EGG ");  
+          Serial.println(WAITING_EASTER_EGG);
+        }
+
+        botao = verificaBotao(true);
+        
+        if (botao!=0){
+          Serial.print("botao apertado: ");
+          Serial.println(botao);
+          if (botao==BTN_START){
+             state=PLAYING_SEQ;
+             startingDelay();
+             return;
+          }
+          else{
+            if (validaEasterEgg (botao)){
+              Serial.print("easterEggPos ");
+              Serial.println(easterEggPos);
+              delay(500);
+              easterEggPos++;
+            }
+            else{
+              easterEggPos=0;
+            }
+            if(easterEggPos==8){
+              easterEggPos=0;
+              playEasterEgg();
+            }
+          }
+          botao = 0;
         }
         
-        if ( easterEggPos == 7 ){
-          playEasterEgg();
-          easterEggPos = 0;
-        } else {
-          
-          if ( pushEasterEgg() == 1 ){
-             easterEggPos++;
-             Serial.println("acertou easterEgg!");
-          }
-          else {
-             Serial.println("errou easterEgg!");
-              easterEggPos = 0;
-              key = pushStart();
-              if(key == 1){
-                state = playingSeq;
-                startingDelay();
-              }
-          }
+      return;
+      
+      case WAITING_START:   
+        interval = 500;
+        if (DEBUGGING){
+          Serial.print("WAITING_START");  
+          Serial.println(WAITING_START);
+        }
+        key = pushStart();
+        
+        if(key == 1){
+          state = PLAYING_SEQ;
+          startingDelay();
         }
         return;  
-      case playingSeq:
-        if (debugging)
-          Serial.println("playingSeq");  
+      case PLAYING_SEQ:
+        if (DEBUGGING)
+          Serial.println("PLAYING_SEQ");  
         playSeq();
         posType = 0;
-        state = userTyping;
+        state = USER_TYPING;
         return;
-      case userTyping:
-        if (debugging)
-          Serial.println("userTyping");  
+      case USER_TYPING:
+        if (DEBUGGING)
+          Serial.println("USER_TYPING");  
         key = 1;
+        Serial.println("key = 1");
         int ok = true;
+        Serial.print("ok = ");
+        Serial.println(ok);
         while(ok)
         {
             key = readKey(true);
+            Serial.print("botao pressionado");  
+            Serial.println(key); 
             if (key == 0)
               break;
-            play(key-4);
+            play(retornaPortaLed(key));
             ok = validateSeq(key);
-            if (debugging)
+            if (DEBUGGING)
             {
               Serial.print("ok=");
               Serial.println(ok);
@@ -496,9 +139,10 @@ void loop() {
             {
               if (posType == posSeq)
               {
+                Serial.print("Antes do delay");
                 delay(1000);
                 posSeq++;
-                state = playingSeq;
+                state = PLAYING_SEQ;
                 interval = interval * 0.95;
                 return;
               }  
@@ -525,30 +169,14 @@ void loop() {
                  else
                    Serial.println("Cool!");
         generateSeq();
-        state = waitingStart;
+        state = WAITING_EASTER_EGG;
         return;
           
   }
 }
 
-int pushEasterEgg(){
-
-  int proxKeyEasterEgg = digitalRead(easterEggSeq[easterEggPos]);
-
- if (proxKeyEasterEgg == 1){
-    Serial.print("proxKeyEasterEgg=");
-    Serial.println(proxKeyEasterEgg);
-    return 1;
-  }
-  
-  return 0;
-  
-  
-  Serial.println("Implementar as teclas do easteregg!");
-}
-
 int pushStart(){
-  startValue = digitalRead(start);
+  startValue = digitalRead(BTN_START);
 
   if (startValue == 1){
     Serial.print("StartValue=");
@@ -558,25 +186,51 @@ int pushStart(){
   
   return 0;
 }
+int retornaPortaLed(int botao){
+  if(botao == BTN_WHITE){
+    return L_WHITE;
+  }
+  else if(botao == BTN_RED){
+    return L_RED;
+  }
+  else if(botao == BTN_PINK){
+    return L_PINK;
+  }
+  else if(botao == BTN_BLUE){
+    return L_BLUE;
+  }
+  return 0;
+}
 
 int validateSeq(int key)
 {
-  return (key-4) == seq[posType]; // (key -4) = key to LED
+   if (DEBUGGING){
+    Serial.print("Seq[posType]: "); 
+    Serial.println(seq[posType]); 
+    Serial.print("Posição: "); 
+    Serial.println(posType); 
+    Serial.print("retornaPortaLed: "); 
+    Serial.println(retornaPortaLed(key)); 
+    Serial.print("key: "); 
+    Serial.println(key); 
+   }
+  return retornaPortaLed(key) == seq[posType];
 }
-
 
 int readKey(int validateMilis)
 {
+  if (DEBUGGING)
+     Serial.println("ReadKey"); 
    unsigned long ms = millis();
    int value = LOW;
    while(value == LOW)
    {
-     for (int i = kred; i >= kwhite; i--)
+     for (int i = BTN_PINK; i >= BTN_WHITE; i--)
      {
        if (validateMilis)
          if ((millis() - ms) > 3000)
          {
-           if (debugging)
+           if (DEBUGGING)
              Serial.println("Timeout"); 
            return 0;
          }
@@ -589,25 +243,58 @@ int readKey(int validateMilis)
   }
 }
 
+
+int verificaBotao(int validateMilis)
+{
+   if (DEBUGGING){
+    Serial.print("validateMilis "); 
+    Serial.println(validateMilis); 
+    Serial.print("digitalRead(BTN_START)");
+    Serial.println(digitalRead(BTN_START));
+   }
+   unsigned long ms = millis();
+   int value = LOW;
+   while(value == LOW)
+   {
+     for (int i = 5; i >= 0; i--)
+     {
+       if (validateMilis)
+         if ((millis() - ms) > 3000)
+         {
+           if (DEBUGGING)
+             Serial.println("Timeout"); 
+           return 0;
+         }
+       value = digitalRead(BOTOES_SEQ[i]);
+       
+       if (value == HIGH)
+       {
+         return BOTOES_SEQ[i];
+       }
+     }
+  }
+  return 0;
+}
+
 void playPich(int pich, int duration)
 {
-  tone(buzzer, pich);
+  tone(BUZZER, pich);
   delay(duration);
-  noTone(buzzer);
+  noTone(BUZZER);
 }
 
 void playStart() 
 {
-    int light = lwhite;
-    for (int thisNote = 1; thisNote < (life[0] * 2 + 1); thisNote = thisNote + 2) { // Run through the notes one at a time
+    int light = L_PINK;
+    for (int thisNote = 1; thisNote < (LIFE[0] * 2 + 1); thisNote = thisNote + 2) { // Run through the notes one at a time
       digitalWrite(light, HIGH);  
-      tone(buzzer, life[thisNote], (1000/life[thisNote + 1]));        // Play the single note
-      delay((1000/life[thisNote + 1]) * 1.30);                        // Delay for the specified time
-      noTone(buzzer);                                                 // Silence the note that was playing
+      tone(BUZZER, LIFE[thisNote], (1000/LIFE[thisNote + 1]));        // Play the single note
+      delay((1000/LIFE[thisNote + 1]) * 1.30);                        // Delay for the specified time
+      noTone(BUZZER);                                                 // Silence the note that was playing
 
       digitalWrite(light, LOW);  
-      if (light == lred) {
-        light = lwhite;
+      if (light == L_WHITE) {
+        light = L_PINK;
       } else {
         light++;
       }
@@ -619,19 +306,19 @@ void playWrong()
 {
     Serial.println("playWrong");
     running = 0;
-    int light = lwhite;
-    for (int thisNote = 1; thisNote < (death[0] * 2 + 1); thisNote = thisNote + 2) { // Run through the notes one at a time
-      if (death[thisNote] != NOTE_H) {
+    int light = L_PINK;
+    for (int thisNote = 1; thisNote < (DEATH[0] * 2 + 1); thisNote = thisNote + 2) { // Run through the notes one at a time
+      if (DEATH[thisNote] != NOTE_H) {
         digitalWrite(light, HIGH);
       }
-      tone(buzzer, death[thisNote], (1000/death[thisNote + 1]));// Play the single note
-      delay((1000/death[thisNote + 1]) * 1.30);                        // Delay for the specified time
-      noTone(buzzer);                                                 // Silence the note that was playing
+      tone(BUZZER, DEATH[thisNote], (1000/DEATH[thisNote + 1]));// Play the single note
+      delay((1000/DEATH[thisNote + 1]) * 1.30);                        // Delay for the specified time
+      noTone(BUZZER);                                                 // Silence the note that was playing
 
      digitalWrite(light, LOW);  
-      if (light == lred) {
-        light = lwhite;
-      } else if (death[thisNote] != NOTE_H) {
+      if (light == L_WHITE) {
+        light = L_PINK;
+      } else if (DEATH[thisNote] != NOTE_H) {
         light++;
       }
     }
@@ -640,18 +327,18 @@ void playWrong()
 
 void playEasterEgg() 
 {
-    int light = lwhite;
+    int light = L_PINK;
     int x = 0;
-    while (missImp2[x]!=-1){
-       if (missImp2[x] != NOTE_H) {
+    while (NOTES_MISS_IMP[x]!=-1){
+       if (NOTES_MISS_IMP[x] != NOTE_H) {
         digitalWrite(light, HIGH);
        }
-       tone(buzzer, missImp2[x], (missImp2Dur[x]));
-       delay(missImp2Dur[x]);
-       noTone(buzzer);
+       tone(BUZZER, NOTES_MISS_IMP[x], (TIME_NOTES_MISS_IMP[x]));
+       delay(TIME_NOTES_MISS_IMP[x]);
+       noTone(BUZZER);
        digitalWrite(light, LOW);  
-       if (light == lred) {
-          light = lwhite;
+       if (light == L_WHITE) {
+          light = L_PINK;
        } else {
           light++;
        }
@@ -665,10 +352,10 @@ void demo()
   interval = 500;
   while(interval > 5)
   {
-    play(lred);
-    play(lyellow);
-    play(lgreen);
-    play(lwhite);
+    play(L_RED);
+    play(L_WHITE);
+    play(L_BLUE);
+    play(L_PINK);
     interval = interval / 1.5;
   }
 }
@@ -676,10 +363,10 @@ void demo()
 void blink(int led, int pich)
 {
   digitalWrite(led, HIGH);
-  tone(buzzer,pich);
+  tone(BUZZER,pich);
   delay(interval);
   digitalWrite(led, LOW);
-  noTone(buzzer);
+  noTone(BUZZER);
   delay(noSound);
 }
 
@@ -687,17 +374,17 @@ void play(int pich)
 {
   switch(pich)
   {
-    case 7:
-      blink(lred,NOTE_C4);
+    case L_RED:
+      blink(L_RED,NOTE_C4);
       break;
-    case 6:
-      blink(lyellow,NOTE_E4);
+    case L_WHITE:
+      blink(L_WHITE,NOTE_E4);
       break;
-    case 5:
-      blink(lgreen,NOTE_G4);
+    case L_BLUE:
+      blink(L_BLUE,NOTE_G4);
       break;
-    case 4:
-      blink(lwhite,NOTE_AS4);
+    case L_PINK:
+      blink(L_PINK,NOTE_AS4);
       break;
   }  
 }
@@ -705,15 +392,18 @@ void play(int pich)
 void generateSeq()
 {
   posSeq = 0;
-  if (debugging)
-    Serial.println("generateSeq");
+  if (DEBUGGING)
+    Serial.print("generateSeq");
   int note;
   for (int i = 0; i < 50; i++)
   {
     seq[i] = random(4) + 4;
-    if (debugging)
-      Serial.println(seq[i]);
+    if (DEBUGGING)
+      Serial.print(seq[i]);
+      Serial.print(", ");
   }
+  if (DEBUGGING)
+      Serial.println("");
 }
 
 void playSeq()
@@ -723,6 +413,11 @@ void playSeq()
     play(seq[i]);
   }
 }
-
-
-
+int validaEasterEgg(int proxKeyEasterEgg){
+   if (proxKeyEasterEgg == EASTER_EGG_SEQ[easterEggPos]){  
+    Serial.print("proxKeyEasterEgg=");
+    Serial.println(proxKeyEasterEgg);
+    return 1;
+  }
+  return 0;
+}
