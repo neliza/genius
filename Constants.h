@@ -1,4 +1,4 @@
-#define BUZZER 15
+#define BUZZER 14
 
 #define WAITING_START   	0 
 #define PLAYING_SEQ     	1
@@ -6,16 +6,17 @@
 #define VALIDATING_SEQ  	4
 #define WAITING_EASTER_EGG 	5
 
-#define BTN_WHITE    		9
-#define BTN_RED  			10
-#define BTN_BLUE   			11
-#define BTN_PINK   		    12
-#define BTN_START    		13
+#define BTN_WHITE    			9
+#define BTN_RED  				10
+#define BTN_BLUE   				11
+#define BTN_PINK   				12
+#define BTN_START    			24
 
-#define L_PINK      4
-#define L_BLUE      5
+#define L_PINK  	4
+#define L_BLUE  	5
 #define L_RED    	6
 #define L_WHITE 	7
+
 
 #define DEBUGGING 1
 
